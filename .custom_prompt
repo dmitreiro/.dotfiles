@@ -1,0 +1,61 @@
+# git
+GIT_PS1_SHOWDIRTYSTATE='y'
+GIT_PS1_SHOWSTASHSTATE='y'
+GIT_PS1_SHOWUNTRACKEDFILES='y'
+GIT_PS1_DESCRIBE_STYLE='contains'
+GIT_PS1_SHOWUPSTREAM='auto'
+
+source /etc/bash_completion.d/git-prompt
+
+# background colors
+bg_green="\\[\\e[48;5;2m\\]"
+bg_yellow="\\[\\e[48;5;3m\\]"
+bg_white="\\[\\e[48;5;15m\\]"
+
+# foreground colors
+fg_red="\\[\\e[1;31m\\]"
+fg_blue="\\[\\e[1;34m\\]"
+fg_black="\\[\\e[1;30m\\]"
+fg_green="\\[\\e[1;38;5;2m\\]"
+fg_yellow="\\[\\e[1;38;5;3m\\]"
+fg_white="\\[\\e[1;38;5;15m\\]"
+fg_cyan="\\[\\e[1;36m\\]"
+
+finish="\\[\\e[0m\\]"
+
+# prompt builder
+set_custom_prompt() {
+
+    # define user color
+    if [ $(id -u) -eq 0 ]; then
+        user_color=$fg_red
+    else
+        user_color=$fg_green
+    fi
+    
+    # filter path
+    path=$(pwd)
+    slash_count=$(grep -o '/' <<< "$path" | wc -l)
+    if [ $slash_count -lt 4 ]; then
+        result_path="\w"
+    else
+        result_path="$(basename "$(dirname "$path")")/$(basename "$path")"
+    fi
+    
+    # prompt build
+    INIT='${debian_chroot:+($debian_chroot)}'
+    SIMPLE="$fg_yellow➤➤$finish$fg_blue $result_path$finish$fg_cyan$(__git_ps1)$finish$user_color \\\$ $finish"
+    PS1=$INIT
+    PS1+=$SIMPLE
+	
+    # colorful config
+    # PS1+="$bg_green$fg_red \$ \u $finish"
+    # PS1+="$bg_yellow$fg_green$finish$bg_yellow$fg_blue \h $finish"
+    # PS1+="$bg_white$fg_yellow$finish$bg_white$fg_black \w $finish$fg_white$finish"
+}
+
+# calls config for the first time
+set_custom_prompt
+
+# dynamically updates prompt
+PROMPT_COMMAND='set_custom_prompt'

@@ -1,0 +1,91 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+  colors = true
+  # color_good = "#a3be8c"
+  # color_degraded = "#ebcb8b"
+  # color_bad = "#bf616a"
+  interval = 2
+}
+
+# order += "ipv6"
+order += "ethernet _first_"
+order += "wireless _first_"
+order += "memory"
+order += "volume master"
+order += "battery 0"
+# order += "disk /"
+# order += "load"
+order += "tztime local"
+
+wireless _first_ {
+        format_up = "W: %ip %quality"
+        # format_down = "W: down"
+        format_down = ""
+        # separator = false
+        separator_block_width = 30
+}
+
+ethernet _first_ {
+        format_up = "E: %ip"
+        # format_down = "E: down"
+        format_down = ""
+        # separator = false
+        separator_block_width = 30
+}
+
+battery all {
+        format = "♥ %percentage"
+}
+
+battery 0 {
+        format = "%status %percentage"
+        format_down = "No battery"
+        status_chr = "🗲"
+        status_bat = "♥"
+        status_unk = "?"
+        status_full = "☻"
+        path = "/sys/class/power_supply/BAT0/uevent"
+        low_threshold = 20
+        last_full_capacity = true
+        # separator = false
+        separator_block_width = 30
+}
+
+disk "/" {
+        format = "%avail"
+}
+
+load {
+        format = "%1min"
+}
+
+memory {
+        format = "%used"
+        threshold_degraded = "1G"
+        format_degraded = "RAM < %available"
+        # separator = false
+        separator_block_width = 30
+}
+
+volume master {
+        format = "♪ %volume"
+        format_muted = "♪ muted (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+        # separator = false
+        separator_block_width = 30
+}
+
+tztime local {
+        format = "%H:%M %d-%b-%y"
+        # separator = false
+        separator_block_width = 30
+}

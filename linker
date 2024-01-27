@@ -1,0 +1,92 @@
+#!/bin/bash
+
+FOLDER_PATH="$(realpath $(dirname "${BASH_SOURCE[0]}"))"
+
+# config path list
+P_I3="${HOME}/.config/i3"
+P_I3STATUS="${HOME}/.config/i3status"
+P_KITTY="${HOME}/.config/kitty"
+P_TMUX="${HOME}/.config/tmux"
+P_NVIM="${HOME}/.config/nvim"
+P_SOLAAR="${HOME}/.config/solaar"
+P_VOLUMEICON="${HOME}/.config/volumeicon"
+
+# bash path list
+P_CUST_PROMPT="${HOME}/.custom_prompt"
+P_ALIAS="${HOME}/.bash_aliases"
+P_BASHRC="${HOME}/.bashrc"
+P_XINIT="${HOME}/.xinitrc"
+
+PATHS=($P_I3 $P_I3STATUS $P_KITTY $P_TMUX $P_NVIM $P_SOLAAR $P_VOLUMEICON)
+F_PATHS=($P_CUST_PROMPT $P_ALIAS $P_BASHRC $P_XINIT)
+
+pathlinker() {
+    case $1 in
+        $P_I3)
+            ln -s "${FOLDER_PATH}/.config/i3" ${P_I3}
+            ;;
+        $P_I3STATUS)
+            ln -s "${FOLDER_PATH}/.config/i3status" ${P_I3STATUS}
+            ;;
+        $P_KITTY)
+            ln -s "${FOLDER_PATH}/.config/kitty" ${P_KITTY}
+            ;;
+        $P_TMUX)
+            ln -s "${FOLDER_PATH}/.config/tmux" ${P_TMUX}
+            ;;
+        $P_NVIM)
+            ln -s "${FOLDER_PATH}/.config/nvim" ${P_NVIM}
+            ;;
+        $P_SOLAAR)
+            ln -s "${FOLDER_PATH}/.config/solaar" ${P_SOLAAR}
+            ;;
+        $P_VOLUMEICON)
+            ln -s "${FOLDER_PATH}/.config/volumeicon" ${P_VOLUMEICON}
+            ;;
+        $P_CUST_PROMPT)
+            ln -s "${FOLDER_PATH}/.custom_prompt" ${P_CUST_PROMPT}
+            ;;
+        $P_ALIAS)
+            ln -s "${FOLDER_PATH}/.bash_aliases" ${P_ALIAS}
+            ;;
+        $P_BASHRC)
+            ln -s "${FOLDER_PATH}/.bashrc" ${P_BASHRC}
+            ;;
+        $P_XINIT)
+            ln -s "${FOLDER_PATH}/.xinitrc" ${P_XINIT}
+            ;;
+        *)
+            echo "Path not inside linker method case"
+            ;;
+    esac
+}
+
+ask() {
+    read -p "$1 (Y/n): " ans
+    [ -z ans ] || [ "$ans" = "y" ]
+}
+
+# main code
+
+# folder loop
+for item in "${PATHS[@]}"; do
+    if ask "Do you want to create and link "${item}"?"; then
+        if [ -d "$item" ]; then
+            rm -rf "$item"
+        fi
+        pathlinker "$item"
+    fi
+done
+
+# files loop
+for item in "${F_PATHS[@]}"; do
+    if ask "Do you want to create and link "${item}"?"; then
+        if [ -f "$item" ]; then
+            rm "$item"
+        fi
+        pathlinker "$item"
+    fi
+done
+
+echo "Done! :)"
+exit 0
