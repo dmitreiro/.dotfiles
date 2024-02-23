@@ -251,8 +251,9 @@ bindsym $mod+Shift+s exec --no-startup-id maim --select | xclip -selection clipb
 bindsym $mod+b exec firefox-esr
 bindsym $mod+t exec thunderbird
 bindsym $mod+c exec qalculate
-# bindsym $mod+x exec pcmanfm
-bindsym $mod+x exec nautilus
+bindsym $mod+x exec pcmanfm
+# bindsym $mod+x exec nautilus
+bindsym $mod+Shift+v exec /usr/bin/diodon
 
 set $mode_system System: [l]ock, [e]logout, [s]uspend, [r]eboot, [p]oweroff
 mode "$mode_system" {
