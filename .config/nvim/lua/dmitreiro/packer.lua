@@ -17,6 +17,8 @@ return require('packer').startup(function(use)
 
   use 'askfiy/visual_studio_code'
 
+  use 'lervag/vimtex'
+
   use ('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
 
   use 'theprimeagen/harpoon'
