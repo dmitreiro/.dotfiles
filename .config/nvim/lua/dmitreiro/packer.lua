@@ -8,9 +8,9 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use {
-  	'nvim-telescope/telescope.nvim', tag = '0.1.4',
-	-- or                            , branch = '0.1.x',
-  	requires = { {'nvim-lua/plenary.nvim'} }
+    'nvim-telescope/telescope.nvim', tag = '0.1.4',
+    -- or                            , branch = '0.1.x',
+    requires = { { 'nvim-lua/plenary.nvim' } }
   }
 
   -- use { "catppuccin/nvim", as = "catppuccin" }
@@ -19,7 +19,7 @@ return require('packer').startup(function(use)
 
   use 'lervag/vimtex'
 
-  use ('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+  use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 
   use 'theprimeagen/harpoon'
 
@@ -33,38 +33,43 @@ return require('packer').startup(function(use)
 
   use {
     --- Uncomment these if you want to manage LSP servers from neovim
-    {'williamboman/mason.nvim'},
-    {'williamboman/mason-lspconfig.nvim'},
+    { 'williamboman/mason.nvim' },
+    { 'williamboman/mason-lspconfig.nvim' },
 
     -- LSP Support
-    {'neovim/nvim-lspconfig'},
+    { 'neovim/nvim-lspconfig' },
     -- Autocompletion
-    {'hrsh7th/nvim-cmp'},
-    {'hrsh7th/cmp-nvim-lsp'},
-    {'L3MON4D3/LuaSnip'},
+    { 'hrsh7th/nvim-cmp' },
+    { 'hrsh7th/cmp-nvim-lsp' },
+    { 'L3MON4D3/LuaSnip' },
   }
 
   use {
-      'nvim-lualine/lualine.nvim',
-      requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
   }
 
   use {
     'lukas-reineke/indent-blankline.nvim',
     config = function()
-        require('ibl').setup()
+      require('ibl').setup()
     end
   }
 
   use {
     'numToStr/Comment.nvim',
     config = function()
-        require('Comment').setup()
+      require('Comment').setup()
     end
   }
 
   use 'lewis6991/gitsigns.nvim'
 
   use 'theprimeagen/vim-be-good'
+
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
 
 end)
