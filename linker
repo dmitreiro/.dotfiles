@@ -8,7 +8,6 @@ P_I3STATUS="${HOME}/.config/i3status"
 P_KITTY="${HOME}/.config/kitty"
 P_TMUX="${HOME}/.config/tmux"
 P_NVIM="${HOME}/.config/nvim"
-P_SOLAAR="${HOME}/.config/solaar"
 P_VOLUMEICON="${HOME}/.config/volumeicon"
 
 # bash path list
@@ -17,7 +16,7 @@ P_ALIAS="${HOME}/.bash_aliases"
 P_BASHRC="${HOME}/.bashrc"
 P_XINIT="${HOME}/.xinitrc"
 
-PATHS=($P_I3 $P_I3STATUS $P_KITTY $P_TMUX $P_NVIM $P_SOLAAR $P_VOLUMEICON)
+PATHS=($P_I3 $P_I3STATUS $P_KITTY $P_TMUX $P_NVIM $P_VOLUMEICON)
 F_PATHS=($P_CUST_PROMPT $P_ALIAS $P_BASHRC $P_XINIT)
 
 pathlinker() {
@@ -36,9 +35,6 @@ pathlinker() {
             ;;
         $P_NVIM)
             ln -s "${FOLDER_PATH}/.config/nvim" ${P_NVIM}
-            ;;
-        $P_SOLAAR)
-            ln -s "${FOLDER_PATH}/.config/solaar" ${P_SOLAAR}
             ;;
         $P_VOLUMEICON)
             ln -s "${FOLDER_PATH}/.config/volumeicon" ${P_VOLUMEICON}

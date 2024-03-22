@@ -58,7 +58,7 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     # Default config
-    #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    # PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 
     # Custom config
     . /home/dmitreiro/.custom_prompt
@@ -119,6 +119,3 @@ fi
 export PATH=$PATH:/sbin
 export PATH=$PATH:/usr/local/go/bin
 export PICO_SDK_PATH=~/pico-sdk
-
-### EOF ###
-
