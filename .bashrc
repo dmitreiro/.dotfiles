@@ -118,4 +118,5 @@ fi
 # Add path to PATH variable
 export PATH=$PATH:/sbin
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/.local/bin
 export PICO_SDK_PATH=~/pico-sdk
