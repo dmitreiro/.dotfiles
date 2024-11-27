@@ -37,7 +37,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+    xterm-color|*-256color|*-kitty) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -119,4 +119,21 @@ fi
 export PATH=$PATH:/sbin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/.local/bin
+export PATH=$PATH:/opt/nvim-linux64/bin
 export PICO_SDK_PATH=~/pico-sdk
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('~/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "~/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "~/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="~/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
