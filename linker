@@ -12,6 +12,7 @@ P_VOLUMEICON="${HOME}/.config/volumeicon"
 
 # define an associative array
 declare -A CONFIG_PATHS=(
+    [local/bin]="${HOME}/.local/bin"
     [i3]="${HOME}/.config/i3"
     [i3status]="${HOME}/.config/i3status"
     [kitty]="${HOME}/.config/kitty"
