@@ -10,52 +10,19 @@ P_TMUX="${HOME}/.config/tmux"
 P_NVIM="${HOME}/.config/nvim"
 P_VOLUMEICON="${HOME}/.config/volumeicon"
 
-# bash path list
-P_CUST_PROMPT="${HOME}/.custom_prompt"
-P_ALIAS="${HOME}/.bash_aliases"
-P_BASHRC="${HOME}/.bashrc"
-P_XINIT="${HOME}/.xinitrc"
-
-PATHS=($P_I3 $P_I3STATUS $P_KITTY $P_TMUX $P_NVIM $P_VOLUMEICON)
-F_PATHS=($P_CUST_PROMPT $P_ALIAS $P_BASHRC $P_XINIT)
-
-pathlinker() {
-    case $1 in
-        $P_I3)
-            ln -s "${FOLDER_PATH}/.config/i3" ${P_I3}
-            ;;
-        $P_I3STATUS)
-            ln -s "${FOLDER_PATH}/.config/i3status" ${P_I3STATUS}
-            ;;
-        $P_KITTY)
-            ln -s "${FOLDER_PATH}/.config/kitty" ${P_KITTY}
-            ;;
-        $P_TMUX)
-            ln -s "${FOLDER_PATH}/.config/tmux" ${P_TMUX}
-            ;;
-        $P_NVIM)
-            ln -s "${FOLDER_PATH}/.config/nvim" ${P_NVIM}
-            ;;
-        $P_VOLUMEICON)
-            ln -s "${FOLDER_PATH}/.config/volumeicon" ${P_VOLUMEICON}
-            ;;
-        $P_CUST_PROMPT)
-            ln -s "${FOLDER_PATH}/.custom_prompt" ${P_CUST_PROMPT}
-            ;;
-        $P_ALIAS)
-            ln -s "${FOLDER_PATH}/.bash_aliases" ${P_ALIAS}
-            ;;
-        $P_BASHRC)
-            ln -s "${FOLDER_PATH}/.bashrc" ${P_BASHRC}
-            ;;
-        $P_XINIT)
-            ln -s "${FOLDER_PATH}/.xinitrc" ${P_XINIT}
-            ;;
-        *)
-            echo "Path not inside linker method case"
-            ;;
-    esac
-}
+# define an associative array
+declare -A CONFIG_PATHS=(
+    [i3]="${HOME}/.config/i3"
+    [i3status]="${HOME}/.config/i3status"
+    [kitty]="${HOME}/.config/kitty"
+    [tmux]="${HOME}/.config/tmux"
+    [nvim]="${HOME}/.config/nvim"
+    [volumeicon]="${HOME}/.config/volumeicon"
+    [cust_prompt]="${HOME}/.custom_prompt"
+    [alias]="${HOME}/.bash_aliases"
+    [bashrc]="${HOME}/.bashrc"
+    [xinit]="${HOME}/.xinitrc"
+)
 
 ask() {
     read -p "$1 (Y/n): " ans
@@ -65,22 +32,17 @@ ask() {
 # main code
 
 # folder loop
-for item in "${PATHS[@]}"; do
-    if ask "Do you want to create and link "${item}"?"; then
-        if [ -d "$item" ]; then
-            rm -rf "$item"
+for key in "${!CONFIG_PATHS[@]}"; do
+    if ask "Do you want to link $key?"; then
+        if [ -d "${CONFIG_PATHS[$key]}" ]; then
+            if ask "${CONFIG_PATHS[$key]} will be removed, do you want to proceed?"; then
+                rm -rf "${CONFIG_PATHS[$key]}"
+            else
+                continue
+            fi
         fi
-        pathlinker "$item"
-    fi
-done
-
-# files loop
-for item in "${F_PATHS[@]}"; do
-    if ask "Do you want to create and link "${item}"?"; then
-        if [ -f "$item" ]; then
-            rm "$item"
-        fi
-        pathlinker "$item"
+        target="${CONFIG_PATHS[$key]//$HOME/$FOLDER_PATH}"
+        ln -s "$target" "${CONFIG_PATHS[$key]}" 
     fi
 done
 
