@@ -2,14 +2,6 @@
 
 FOLDER_PATH="$(realpath $(dirname "${BASH_SOURCE[0]}"))"
 
-# config path list
-P_I3="${HOME}/.config/i3"
-P_I3STATUS="${HOME}/.config/i3status"
-P_KITTY="${HOME}/.config/kitty"
-P_TMUX="${HOME}/.config/tmux"
-P_NVIM="${HOME}/.config/nvim"
-P_VOLUMEICON="${HOME}/.config/volumeicon"
-
 # define an associative array
 declare -A CONFIG_PATHS=(
     [local/bin]="${HOME}/.local/bin"
@@ -35,11 +27,10 @@ ask() {
 # folder loop
 for key in "${!CONFIG_PATHS[@]}"; do
     if ask "Do you want to link $key?"; then
-        if [ -d "${CONFIG_PATHS[$key]}" ]; then
-            if ask "${CONFIG_PATHS[$key]} will be removed, do you want to proceed?"; then
-                rm -rf "${CONFIG_PATHS[$key]}"
-            else
-                continue
+        if [ -e "${CONFIG_PATHS[$key]}" ]; then
+            mv "${CONFIG_PATHS[$key]}" "${CONFIG_PATHS[$key]}~"
+            if [[ -L "${CONFIG_PATHS[$key]}~" ]]; then
+                unlink "${CONFIG_PATHS[$key]}~"
             fi
         fi
         target="${CONFIG_PATHS[$key]//$HOME/$FOLDER_PATH}"
