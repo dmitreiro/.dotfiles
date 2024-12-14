@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# current folder path
 FOLDER_PATH="$(realpath $(dirname "${BASH_SOURCE[0]}"))"
 
 # define an associative array
@@ -17,6 +18,7 @@ declare -A CONFIG_PATHS=(
     [xinit]="${HOME}/.xinitrc"
 )
 
+# ask and receive input from user
 ask() {
     read -p "$1 (Y/n): " ans
     [ -z ans ] || [ "$ans" = "y" ]
@@ -24,15 +26,17 @@ ask() {
 
 # main code
 
-# folder loop
+# loops through associative array
 for key in "${!CONFIG_PATHS[@]}"; do
     if ask "Do you want to link $key?"; then
+        # if already exists it's moved to old and unlinked
         if [ -e "${CONFIG_PATHS[$key]}" ]; then
             mv "${CONFIG_PATHS[$key]}" "${CONFIG_PATHS[$key]}~"
             if [[ -L "${CONFIG_PATHS[$key]}~" ]]; then
                 unlink "${CONFIG_PATHS[$key]}~"
             fi
         fi
+        # sets target and links it
         target="${CONFIG_PATHS[$key]//$HOME/$FOLDER_PATH}"
         ln -s "$target" "${CONFIG_PATHS[$key]}" 
     fi
