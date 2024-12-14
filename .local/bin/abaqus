@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+script_name=$(basename "$0")
+
+if [ $# -eq 0 ] || { [ "$1" != "start" ] && [ "$1" != "stop" ] && [ "$1" != "status" ]; }; then
+	echo "Usage: $script_name {start|stop|status}"
+	exit 1
+fi
+
+if [ "$1" = "start" ]; then
+	VBoxManage startvm abaqus --type headless
+	sleep 10
+	ssh abaqus
+fi
+
+if [ "$1" = "stop" ]; then
+	VBoxManage controlvm abaqus shutdown 
+fi
+
+if [ "$1" = "status" ]; then
+	VBoxManage list runningvms | grep abaqus
+fi
+
+exit 0
