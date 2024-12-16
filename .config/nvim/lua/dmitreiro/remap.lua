@@ -31,7 +31,10 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("n", "<leader>s", ":%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>", opts)
 
 -- Turning file executable
-keymap("n", "<leader>x", "<cmd>!chmod +x %<CR>", opts)
+keymap("n", "<leader><leader>x", "<cmd>!chmod +x %<CR>", opts)
+
+-- Executing file
+keymap("n", "<leader>x", "<cmd>w<CR><cmd>!%<CR>", opts)
 
 -- Pushing line below to current
 keymap("n", "J", "mzJ`z", opts)
