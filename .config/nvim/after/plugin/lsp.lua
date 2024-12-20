@@ -19,7 +19,7 @@ end
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-  ensure_installed = {"pylsp", "lua_ls", "rust_analyzer"},
+  ensure_installed = {"pylsp", "lua_ls"},
   handlers = {
     default_setup,
     lua_ls = function()
