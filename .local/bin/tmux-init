@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# checks if tmux and kitty are already running
+tmux_running=$(pgrep tmux)
+kitty_running=$(pgrep kitty) 
+
+# if kitty already running, do nothing
+if [[ $kitty_running ]]; then
+    exit 0
+fi
+
+# if not inside a tmux session and if there's no tmux process running, creates new session
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    kitty tmux new-session
+    exit 0
+fi
+
+# if not inside a tmux session and if there's a tmux process running, attaches to session
+if [[ -z $TMUX ]] && [[ $tmux_running ]]; then
+    kitty tmux attach
+    exit 0
+fi
+
+exit 0
