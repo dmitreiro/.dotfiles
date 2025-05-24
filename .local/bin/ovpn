@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+script_name=$(basename "$0")
+
+if [ $# -eq 0 ] || { [ "$1" != "start" ] && [ "$1" != "stop" ] && [ "$1" != "status" ]; }; then
+	echo "Usage: $script_name {start|stop|status}"
+	exit 1
+fi
+
+if [ "$1" = "start" ]; then
+	openvpn3 session-start --config=dmitreiro.ovpn
+fi
+
+if [ "$1" = "stop" ]; then
+	openvpn3 session-manage --disconnect --config=dmitreiro.ovpn
+fi
+
+if [ "$1" = "status" ]; then
+	openvpn3 sessions-list
+fi
+
+exit 0
