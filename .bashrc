@@ -120,6 +120,7 @@ export PATH=$PATH:/sbin
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:~/.local/bin
 export PATH=$PATH:/opt/nvim-linux64/bin
+export PATH=$PATH:/snap/bin
 export PICO_SDK_PATH=~/pico-sdk
 
 # If exists, calls conda initialize
