@@ -9,7 +9,7 @@ fi
 
 if [ "$1" = "start" ]; then
 	VBoxManage startvm abaqus --type headless
-	sleep 10
+	sleep 15
 	ssh abaqus
 fi
 
