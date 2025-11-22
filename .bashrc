@@ -127,3 +127,11 @@ export PICO_SDK_PATH=~/pico-sdk
 if [ -f ~/.conda_init ]; then
     . ~/.conda_init
 fi
+
+# starts ssh agent the first time a bash shell is opened
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
+  eval `ssh-agent`
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
+fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+
