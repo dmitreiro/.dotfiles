@@ -123,15 +123,19 @@ export PATH=$PATH:/opt/nvim-linux64/bin
 export PATH=$PATH:/snap/bin
 export PICO_SDK_PATH=~/pico-sdk
 
+# ssh-agent
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+touch $XDG_RUNTIME_DIR/ssh-agent.env
+
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+  ssh-agent > "$XDG_RUNTIME_DIR/ssh-agent.env"
+fi
+if [ ! -f "$SSH_AUTH_SOCK" ]; then
+  source "$XDG_RUNTIME_DIR/ssh-agent.env" >/dev/null
+fi
+
 # If exists, calls conda initialize
 if [ -f ~/.conda_init ]; then
     . ~/.conda_init
 fi
-
-# starts ssh agent the first time a bash shell is opened
-if [ ! -S ~/.ssh/ssh_auth_sock ]; then
-  eval `ssh-agent`
-  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-fi
-export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
 
