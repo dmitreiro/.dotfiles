@@ -1,6 +1,7 @@
 alias la='ls -lha'
 alias ll='ls -lh'
 alias rh='ssh-keygen -f "$HOME/.ssh/known_hosts" -R'
+alias cpsync='rsync -rhavz --exclude "._*" --exclude ".DS_Store" --partial --progress --stats'
 
 alias ..='cd ..'
 alias ...='cd ../../'
